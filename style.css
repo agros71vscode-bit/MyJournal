@@ -1,0 +1,118 @@
+/* --- VERSION NOTE: V1.1.1 STYLES --- */
+
+
+/* General Reset and Base Styles of the Page */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif; /*font style used for the page*/
+    background-color: #71bf0a;/*set background color for the page*/
+    display: flex; /*Use Flexbox layout mode to easily arrange items vertically and horizontally*/
+    flex-direction: column; /*arrange items vertically from Top to Bottom*/
+    align-items: center; /*Center items horizontally on the page*/
+    padding: 40px 20px; /*Add padding around the content for better spacing (40px top and bottom, 20px left and right)*/   
+    margin: 0; /*remove the browser's default margin from the body*/
+}
+
+/* Styling for Container/Box called "version-label"*/
+.version-label { 
+    font-size: 10px; color: #ffffff; margin-bottom: 10px; font-weight: bold; text-align: left; /*small, light gray text for the version label with some spacing below it*/ 
+}
+
+/* Styling for Container/Box called "Container"*/
+.container {
+    background: white;/*white background for the form container*/
+    width: 100%; /*Make the container take full width of its parent (the body)*/
+    max-width: 500px;/*Limit the maximum width of the container*/
+    padding: 30px;/*Add padding inside the container for better spacing (30px on all sides)*/
+    border-radius: 15px; /*Rounded corners for a softer look*/
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /*Subtle shadow for depth*/
+    text-align: center; /*Center text inside the container*/
+}
+
+/*Heading and Date styling */
+/*Heading styling for the main header of the page, which is the title of the form "My Journal"*/
+h1 { color:#0F172A; margin: 0 0 5px 0; font-size: 24px; }/*Main header styling: dark blue color, no top margin, small bottom margin, and a slightly larger font size for prominence*/*
+
+/*styling for the date header that shows the current date above the form below the Header*/
+.date-header { color: #94a3b8; font-size: 14px; margin-bottom: 25px; }/*Light gray color, smaller font size, and spacing below it to separate it from the form*/
+
+/*Styling for the mood and type dropdowns */
+.input-group { display: flex; gap: 10px; margin-bottom: 15px; } /*Flexbox container for the mood and type dropdowns with some spacing between them and below them*/
+
+/*Styling for the dropdown menus (mood and type)*/
+select {
+    flex: 1;/*Make the select element take up available space in the flex container*/
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+}
+
+/* Flexbox container that makes the checkbox and text look like one field */
+.editor-border-wrap {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+/* Hidden by default, only shown when "Action" is selected */
+#actionCheckboxWrap {
+    display: none; 
+    padding: 5px 5px 0 5px;
+}
+
+textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    resize: none;
+    height: 120px;
+    background: transparent;
+}
+
+#saveBtn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    background-color: #0EA5E9;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Memories List Container */
+#memoriesList {
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+/* Individual Post Card Styling */
+.memory-item {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+/* Styling for the text content within each memory item */
+.memory-text input[type="checkbox"] {/*create a checkbox inside the text content of each memory item*/
+    transform: scale(1.2); /*Make the checkbox larger for better visibility*/
+    vertical-align: middle; /*Align the checkbox vertically with the text*/
+    accent-color: #f16363; /* Matches your theme color */
+}
+/* Styling for the metadata (date, mood, type) displayed at the top of each memory item */
+.memory-meta { font-size: 12px; color: #94a3b8; margin-bottom: 10px; display: flex; justify-content: space-between; }
+.tag { background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-weight: bold; color: #64748b; }
+.memory-text { color: #1e293b; font-size: 16px; white-space: pre-wrap; display: flex; align-items: flex-start; gap: 8px; }
+.preview-img { width: 100%; border-radius: 8px; margin: 10px 0; }
+.status-done { color: #10b981; font-weight: bold; font-size: 12px; display: block; margin-top: 5px; }
+.action-link { font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-right: 15px; }
