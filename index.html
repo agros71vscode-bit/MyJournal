@@ -1,76 +1,77 @@
-<!--MyJournal_26.05.1.-->
 <!DOCTYPE html>
 <html lang="en">
-    
-<!--***This is the head of the page, appear on the Browser Tab-->
-<head>
+
+  <!-- =========================-->
+  <!-- THIS IS THE HEAD SECTION -->
+  <!-- =========================-->
+  <head>
     <meta charset="UTF-8"> <!--***Common Charater Setting for the page-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--***To match screensizeof the used device-->
+
     <title>MyJournal | Official</title>
     
     <!--stylesheet setting for the page:-->
     <link rel="stylesheet" href="style.css"><!--will open the CSS file in this folder-->
-</head>
+  </head>
 
+  <!-- =========================-->
+  <!-- THIS IS THE BODY SECTION -->
+  <!-- =========================-->
+  <body>
+    <!--== START: Container 1: Title == -->
+    <div class="container">
+      <h1>📖 Personal Journal Pro</h1>
+    <div class="subtitle">Capture thoughts, goals and reflections</div>
+    <!--== END: Container 1: Title ==-->
 
-<body>
-    <!--Line #1 inside the <body> ***class="version-label"*** showing "MyJournal V26.05.1.0" -->
-    <div class="version-label">MyJournal V26.05.1.0</div> <!--it create a Group (class) container/box called: "MyJpurnal V26.05.1.0"-->
-        <!---<div> = a container/box on the page-->
-        <!--class="version-label" = gives that Group (Class) Contrainer/box a name"version-label" so CSS can style it (Everything inside the Group (Class) container/box will have same style)-->
-        <!--MyJournal V26.05.1.0 = the visible text users will see-->
+    <!-- START: Date Input -->
+    <input type="datetime-local" id="dateInput">
+    <!-- END: Date Input -->
 
-    <!--Line 2 Inside the <body>***class="container"*** -->
-    <div class="container"> <!--create a Group (Class) container/box called: "container"-->
+    <!-- START: Category Dropdown -->
+    <select id="categoryInput">
+    <option>📋Daily Log</option>
+    <option>🙈🙉🙊Emotional Outlet</option>
+    <option>📌Goal Tracking</option>
+    <option>🖼️Creative Space</option>
+    <option>🧘‍♂️Self-Reflection</option>
+    </select>
+    <!-- END: Category Dropdown -->
 
-        <!--Line 1 Header inside the Group (Class) container/box called: "container"-->
-        <h1>My Journal</h1> <!--Header called: "My Journal" in Group (Class) container called "container"-->
+    <!-- START: Entry Input -->
+    <textarea id="entryInput" placeholder="Write your thoughts..."></textarea>
+    <!-- END: Entry Input -->
 
-        <!--Line 2 inside the Group (Class)container/box called: "container"-->
-        <div id="currentDate" class="date-header">Loading...</div> <!--“Create a styled date area that temporarily says ‘Loading...’ until the real date is inserted.” -->
-        
-        <!--Line 3 inside the Group (Class) container/box called: "container"-->
-        <div class="input-group"> <!--Create a Group (Class) container/box called: "input-group" to hold the mood and type selectors-->
-           
-            <!--Line 1 inside the Group (Class) container/box called: "input-group"-->
-            <select id="moodSelect"><!--Create a dropdown menu for selecting mood inside the Group (Class) container/box called: "input-group"-->
-                <option value="😊 Happy">😊 Happy</option>
-                <option value="😐 Neutral">😐 Neutral</option>
-                <option value="😔 Sad">😔 Sad</option>
-                <option value="🤩 Excited">🤩 Excited</option>
-                <option value="😤 Stressed">😤 Stressed</option>
-            </select><!--user have to select one of the mood-->
+    <!-- START: Save Button -->
+    <button id="saveBtn" class="primary" onclick="saveEntry()">Save Entry</button>
+    <!-- END: Save Button -->
 
-            <!--Line 2 inside the Group (Class) container/box called: "input-group"-->
-            <select id="typeSelect"><!--Create a dropdown menu for selecting entry type inside the Group (Class) container/box called: "input-group"-->
-                <option value="Note">📝 Note</option>
-                <option value="Action">▢⚡ Action</option>
-                <option value="Event">📅 Event</option>
-                <option value="Other">🌀 Other</option>
-            </select><!--user have to select one of the entry types-->
-        
-        </div><!--end of Container (Class) called: "input-group"-->
+    <!-- START: Search Bar -->
+    <input type="text" id="searchBar" placeholder="🔍 Search..." onkeyup="filterEntries()">
+    <!-- END: Search Bar -->
 
-        <div class="editor-border-wrap"><!--Create a Group (Class) Container/Box called "editor-border-wrap"-->
+    <!-- START: Toolbar with Export Buttons -->
+    <div class="toolbar">
+    <button class="secondary" onclick="exportTXT()">Export TXT</button>
+    <button class="secondary" onclick="exportCSV()">Export CSV</button>
+    </div>
+    <!-- END: Toolbar with Export Buttons -->
 
-            <div id="actionCheckboxWrap"><!--Create section called "actionCheckboxWrap"-->
-                <input type="checkbox" id="isCompleted"> <!--Create a checkbox for marking entries as completed called "isCompleted"-->
-            </div><!--end of Container/box "actionCheckboxWrap"-->
-            
-            <textarea id="entryInput" placeholder="What's on your mind?"></textarea><!--Create a large typing area called "entryInput" with a placeholder text said: "What's on your mind?"-->
-        
-            
-        </div><!--end of Container/box "editor-border-wrap"-->
-        
-        <!--File input for uploading image complete with the styles-->
-        <input type="file" id="fileInput" accept="image/*" style="margin-bottom: 20px; width: 100%;">
-        <!--Create a button for saving the entry-->
-        <button id="saveBtn">Save Entry</button>
-    </div><!--End of Container (Class) called: "container"-->
+    <!-- START: Stats and Entries Table -->
+    <div class="stats" id="entryCount">0 entries</div>
+    <table>
+    <thead><tr><th>Date</th><th>Category</th><th>Entry</th><th>Actions</th></tr></thead>
+    <tbody id="tbody"></tbody>
+   </table>
+    </div>
+    <!-- END: Stats and Entries Table -->
 
-    <!--Create an empty container for memories/journal entries, make it responsive, and limit its maximum width so it doesn’t become too wide.-->
-    <div id="memoriesList" style="width: 100%; max-width: 540px; margin: 0 auto;"></div>
+    <!-- Link to the JavaScript file -->
+   <script type="module" src="script.js"></script>
+    <!-- This will open the JavaScript file in this folder and run the code inside it -->
 
-    <script type="module" src="script.js"></script>
-</body>
+  </body>
+  <!-- ===END OF BODY=== -->
+
 </html>
+<!-- ===END OF HTML=== -->
