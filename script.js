@@ -99,10 +99,24 @@ function filterEntries(){
  ));
 }
 
+// ==========================================
+// EXPORT CSV FUNCTION (Choose Save Location)
+// ==========================================
+
+// "async" allows us to use "await"
+// because we must wait for the user
+// to choose where to save the file.
 async function exportCSV(){
 
+    // ======================================
+    // STEP 1 - Create CSV text
+    // ======================================
+
+    // Create the header row
     let csv = "Date,Category,Entry\n";
 
+    // Convert each journal entry
+    // into a CSV row
     journal.forEach(item => {
 
         csv +=
@@ -112,11 +126,19 @@ async function exportCSV(){
 
     });
 
+
+    // ======================================
+    // STEP 2 - Ask user where to save file
+    // ======================================
+
+    // Open the browser's Save As dialog
     const handle =
         await window.showSaveFilePicker({
 
+            // Suggested filename
             suggestedName: "journal.csv",
 
+            // File type filter
             types: [{
                 description: "CSV Files",
 
@@ -126,12 +148,38 @@ async function exportCSV(){
             }]
         });
 
+
+    // ======================================
+    // STEP 3 - Create writable file stream
+    // ======================================
+
+    // Prepare the selected file
+    // so we can write data into it
     const writable =
         await handle.createWritable();
 
+
+    // ======================================
+    // STEP 4 - Write CSV data into file
+    // ======================================
+
+    // Save the CSV text
     await writable.write(csv);
 
+
+    // ======================================
+    // STEP 5 - Close file
+    // ======================================
+
+    // Finalize and save the file
     await writable.close();
+
+
+    // ======================================
+    // STEP 6 - Notify user
+    // ======================================
+
+    alert("CSV exported successfully.");
 
 }
 
