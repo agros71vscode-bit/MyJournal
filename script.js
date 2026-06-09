@@ -132,22 +132,36 @@ async function exportCSV(){
     // ======================================
 
     // Open the browser's Save As dialog
-    const handle =
-        await window.showSaveFilePicker({
+   // Create unique filename
+const now = new Date();
 
-            // Suggested filename
-            suggestedName: "journal.csv",
+const fileName =
+    `journal-${now.getFullYear()}-${
+        String(now.getMonth()+1).padStart(2,'0')
+    }-${
+        String(now.getDate()).padStart(2,'0')
+    }-${
+        String(now.getHours()).padStart(2,'0')
+    }-${
+        String(now.getMinutes()).padStart(2,'0')
+    }-${
+        String(now.getSeconds()).padStart(2,'0')
+    }.csv`;
 
-            // File type filter
-            types: [{
-                description: "CSV Files",
+// Open Save As dialog
+const handle =
+    await window.showSaveFilePicker({
 
-                accept: {
-                    "text/csv": [".csv"]
-                }
-            }]
-        });
+        suggestedName: fileName,
 
+        types: [{
+            description: "CSV Files",
+
+            accept: {
+                "text/csv": [".csv"]
+            }
+        }]
+    });
 
     // ======================================
     // STEP 3 - Create writable file stream
