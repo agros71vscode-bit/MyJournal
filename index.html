@@ -52,9 +52,18 @@
 
     <!-- START: Toolbar with Export Buttons -->
     <div class="toolbar">
-    <button class="secondary" onclick="exportTXT()">Export TXT</button>
+
     <button class="secondary" onclick="exportCSV()">Export CSV</button>
-    </div>
+    <button class="secondary" onclick="importCSV()">Import CSV</button>
+
+    <input
+        type="file"
+        id="importFile"
+        accept=".csv"
+        style="display:none"
+    >
+
+</div>
     <!-- END: Toolbar with Export Buttons -->
 
     <!-- START: Stats and Entries Table -->

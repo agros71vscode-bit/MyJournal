@@ -99,20 +99,129 @@ function filterEntries(){
  ));
 }
 
-function exportTXT(){
- let txt='Journal Entries\n\n';
- journal.forEach(x=>txt+=`Date: ${x.date}\nCategory: ${x.category}\nEntry: ${x.entry}\n---\n`);
- const a=document.createElement('a');
- a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
- a.download='journal.txt'; a.click();
+async function exportCSV(){
+
+    let csv = "Date,Category,Entry\n";
+
+    journal.forEach(item => {
+
+        csv +=
+            `"${item.date}",` +
+            `"${item.category}",` +
+            `"${item.entry.replace(/"/g,'""')}"\n`;
+
+    });
+
+    const handle =
+        await window.showSaveFilePicker({
+
+            suggestedName: "journal.csv",
+
+            types: [{
+                description: "CSV Files",
+
+                accept: {
+                    "text/csv": [".csv"]
+                }
+            }]
+        });
+
+    const writable =
+        await handle.createWritable();
+
+    await writable.write(csv);
+
+    await writable.close();
+
 }
 
-function exportCSV(){
- let csv='Date,Category,Entry\n';
- journal.forEach(x=>csv+=`"${x.date}","${x.category}","${x.entry.replace(/"/g,'""')}"\n`);
- const a=document.createElement('a');
- a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
- a.download='journal.csv'; a.click();
-}
+// ==========================================
+// IMPORT CSV FUNCTION
+// ==========================================
 
+function importCSV(){
+
+    // Find the hidden file picker
+    const fileInput =
+        document.getElementById("importFile");
+
+    // Open the file picker window
+    fileInput.click();
+
+    // Run this code after the user selects a file
+    fileInput.onchange = function(e){
+
+        // Get the selected file
+        const file = e.target.files[0];
+
+        // Stop if no file was selected
+        if(!file) return;
+
+        // Create a file reader
+        const reader = new FileReader();
+
+        // Run this after the file has been read
+        reader.onload = function(event){
+
+            // Get all text from the CSV file
+            const csvText = event.target.result;
+
+            // Split the file into rows
+            const rows = csvText.trim().split("\n");
+
+            // Remove the first row
+            // because it contains:
+            // Date,Category,Entry
+            rows.shift();
+
+            // Process each journal row
+            rows.forEach(row => {
+
+                // Example row:
+                // "2026-06-09","Daily Log","Learned JavaScript"
+
+                const parts = row.split('","');
+
+                // If something is wrong with the row,
+                // skip it
+                if(parts.length < 3) return;
+
+                // Create a new journal object
+                const newEntry = {
+
+                    // Generate a unique ID
+                    id: Date.now() + Math.random(),
+
+                    // Remove quotation marks
+                    date: parts[0].replace(/"/g,''),
+
+                    // Remove quotation marks
+                    category: parts[1].replace(/"/g,''),
+
+                    // Remove quotation marks
+                    entry: parts[2].replace(/"/g,'')
+
+                };
+
+                // Add entry into journal array
+                journal.push(newEntry);
+
+            });
+
+            // Save everything to local storage
+            persist();
+
+            // Refresh table display
+            render();
+
+            // Show success message
+            alert("CSV imported successfully");
+
+        };
+
+        // Read the file as plain text
+        reader.readAsText(file);
+
+    };
+}
 render();
